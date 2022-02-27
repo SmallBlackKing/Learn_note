@@ -772,3 +772,6 @@ character_set_server = utf8
 
 ![image-20220226173600892](image/image-20220226173600892.png)
 
+
+
+## 安装Redis
