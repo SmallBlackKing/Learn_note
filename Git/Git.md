@@ -82,6 +82,12 @@ git config --global user.email "用户邮箱"
 
 
 
+### 工作区和（暂存区与本地目录）版本库/本地目录
+
+![image-20211108173212775](image/image-20211108173212775.png)
+
+
+
 
 
 ### Git提交到版本库的步骤
@@ -90,6 +96,8 @@ git config --global user.email "用户邮箱"
 2. 通过“git commit”，把暂存区中的文件推送到当前分支中
 
 将需要修改的文件都推送到暂存区，当确定无需修改后，就直接上传到本地库（当前分支）
+
+
 
 
 
@@ -116,7 +124,7 @@ git config --global user.email "用户邮箱"
 
 
 
-# 本地库的基本操作
+# Git本地库的基本操作
 
 ## 创建本地库
 
@@ -144,11 +152,57 @@ tortoisegit拉去远程仓库
 
 ![image-20211109200041204](image/image-20211109200041204.png)
 
+## 查看文件状态
+
+**git status：查看文件状态**
+
+**git status -s:使输出信息更加简洁**
+
+
+
+**命令：**
+
+​	**git status**
+
+On branch master ：表示主分支
+
+Untracked files：表示未跟踪状态
+
+**说明：**
+
+Git工作目录下的文件状态信息：
+
+​		Untracked 未跟踪（未被纳入版本控制）
+
+​		Tracked 已跟踪（被纳入版本控制）
+
+​		Unmodified 未修改状态
+
+​		Modified 已修改状态
+
+​		Staged 已暂存状态
+
+这些文件的状态会随着我们执行Git的命令发生变化
+
+**红色**表示新建文件或者新修改的文件,都在工作区. 
+
+**绿色**表示文件在暂存区
+
+新建的文件在工作区，需要添加到暂存区并提交到仓库区
+
+也可以使用**git status –s** 使输出信息更加简洁
+
+?? : 表示未跟踪状态
+
+
+
 ## 将文件添加到暂存区
 
 将在工作区刚刚写入的文件或者刚刚修改的文件通过
 
-git add 文件名
+| **git add 文件名** |      添加指定文件      |
+| :----------------: | :--------------------: |
+|   **git add .**    | **添加项目中所有文件** |
 
 添加到暂存区
 
@@ -156,45 +210,214 @@ git add 文件名
 
 
 
-## 由tortoiseGit将文件添加到暂存区
+### 由tortoiseGit将文件添加到暂存区
 
 ![image-20211109113105396](image/image-20211109113105396.png)
 
-## 将文件提交到本地仓库
+
+
+## 撤销暂存区中的文件
+
+命令：
+
+```
+git reset <文件名称>
+撤销后，查看文件状态（git status）文件由绿色变为红色
+```
+
+
+
+## 将暂存区中的文件提交本地库
 
 将暂存区的文件通过
 
-git commit 文件名
+**git commit**  :提交全部文件后，加注解
+
+**git commit 文件名**  ：提交指定文件后，加注解
+
+**git commit -m** **“注解内容”**：直接指定日志内容后提交
+
+
 
 添加到本地仓库         然后添加一些相关注释（介绍提交的文件）
 
 ![image-20211108172148524](image/image-20211108172148524.png)
 
-## 由tortoiseGit将文件添加到本地仓库
+### 由tortoiseGit将文件添加到本地仓库
 
 ![image-20211109113216622](image/image-20211109113216622.png)
 
-## 将修改文件/文件加入到本地仓库
 
-git commit -m 注释 文件名
 
-## 工作区和（暂存区与本地目录）版本库/本地目录
 
-![image-20211108173212775](image/image-20211108173212775.png)
 
-## 查看修改历史
+## 查看日志
 
-git log
+**git log**
 
-git log 文件名：修改的文件名
+**git log 文件名**：查看指定文件的日志
 
-## 删除本地仓库里提交的内容
+**git reflog**：查看历史操作
 
-git rm 文件名
 
-## 重命名提交在仓库的的文件
+
+## 回退/穿梭/撤销版本
+
+
+
+### 回退版本
+
+**git reset --hard HEAD^**    ：一次回退一个版本，一个^代表一个版本数量
+
+**git reset --hard HEAD~n**：一次退回n个版本
+
+**git reset --hard 版本号**：回到最新的版本
+
+
+
+### 穿梭版本
+
+**git reflog a.txt**：查看历史操作
+
+
+
+撤销操作：
+
+未add未commit的文件
+
+**git checkout -- a.txt**：撤销之前的修改
+
+
+
+已add未commit的文件
+
+**git reset**
+
+
+
+## 删除操作
+
+除非你把历史版本都删了，不然还是找的到的。
+
+
+
+重命名提交在仓库的的文件
 
 git mv 旧文件名 新文件名
+
+# Git的分支管理
+
+## 分支的概念
+
+背景：之所以几乎每一个仓库都有 master 分支，是因为git init 命令**默认创建它**，并且大多数人都懒得去改动它。
+
+**分支：相当于在原来的分支上复制了一个一摸一样的内容（版本，文件，日志），把这些内容放在新的分支上。**
+
+
+
+![image-20220301112007217](image/image-20220301112007217.png)
+
+## 分支的好处
+
+同时并行多个功能的开发，提高开发效率
+
+
+
+各个分支开发过程中，如果其中某个分支出现了问题，这也不会影响到其他分支。失败的分支直接删除重新开始即可
+
+## 分支的基本操作
+
+| 命令名称             | 作用                         |
+| -------------------- | ---------------------------- |
+| git  branch 分支名   | 创建分支                     |
+| git  branch -v       | 查看分支                     |
+| git  checkout 分支名 | 切换分支                     |
+| git  merge 分支名    | 把指定的分支合并到当前分支上 |
+| git branch -d 分支名 | 删除分支                     |
+
+
+
+## 创建分支和切换分支的图解
+
+![image-20220301112316325](image/image-20220301112316325.png)
+
+
+
+当前操作哪个分支，这是由HEAD指针来确定的。
+
+HEAD指针指向谁，就会操作哪个分支。指向master，操作master分支；指向hotfix，操作hotfix分支。
+
+第一次创建本地库就会默认的创建master分支
+
+
+
+切换分支的本质：其实就是移动HEAD指针。
+
+![image-20220301112819228](image/image-20220301112819228.png)
+
+## 合并分支的图解
+
+![image-20220301112929222](image/image-20220301112929222.png)
+
+合并分支时一定是涉及到两个分支。这两个分支一个是“**当前所在分支**”，一个是“**目标分支**”。
+
+命令写法：
+
+git merge 目标分支
+
+所以分支合并命令的本质就是**把“目标分支”合并到“当前分支”**。
+
+例如：把hotfix合并到master
+
+git merge hotfx
+
+需要确保当前所在的分支是master
+
+例如：把master合并到hotfix
+
+git merge master
+
+需要确保当前所在的分支是hotfix
+
+
+
+## 版本冲突
+
+**查看冲突**
+
+**git diff:查看冲突**
+
+### 1.  冲突产生的表现
+
+![image-20220301113156366](image/image-20220301113156366.png)
+
+​                               
+
+**Git使用“<<<<<<<、=========、>>>>>>>>>>”符号帮我们标记出来，现在产生冲突的内容。**
+
+![image-20220301113227204](image/image-20220301113227204.png)
+
+
+
+### 2.  冲突产生的原因
+
+合并分支时，两个分支在**同一个文件**的**同一个位置**有**两套完全不同的修改**。Git无法替我们决定使用哪一个。必须人为决定新代码内容。
+
+### 3.  冲突的解决
+
+①编辑有冲突的文件，删除特殊符号，决定要使用的内容
+
+ ![image-20220301113303296](image/image-20220301113303296.png)
+
+②添加到暂存区
+
+ ![image-20220301113307254](image/image-20220301113307254.png)
+
+③执行提交（注意：使用git commit命令时不能带文件名）
+
+ ![image-20220301113311646](image/image-20220301113311646.png)
+
+
 
 # Git提交到GitHub
 
@@ -202,20 +425,65 @@ git mv 旧文件名 新文件名
 
 命令：ssh-keygen -t rsa
 
-## 将git连接到github上
+## 操作步骤
+
+![image-20220301141146301](image/image-20220301141146301.png)
+
+​																		
+
+​																											**图解	**	
+
+### 1.创建好本地仓库
+
+创建项目，提交到本地库这里就不多做赘述，就是init，add，commit那些。
+
+### 2.GitHub创建远程库
+
+①登录后没有任何项目情况下,会显示如下页面
+
+![image-20220301141723569](image/image-20220301141723569.png)
+
+②创建新的仓库
+
+ ![image-20220301141811003](image/image-20220301141811003.png)
+
+③填写创建新仓库信息
+
+ ![image-20220301141821968](image/image-20220301141821968.png)
+
+④创建后出现仓库地址，注意：点一下HTTPS，换下地址。
+
+ ![image-20220301141828077](image/image-20220301141828077.png)
+
+### 3.将本地仓库推送到github上
 
 git remote -v:查看远程连接的地址，及地址的别名
 
+git remote add <远端代号> <远端地址>
+
+**例子**
+
+```
 git remote add origin(代号) git@github.com:lytforgood/MLCompetition.git（仓库名    MicroSoftSon/haozi.git  /  github名字+仓库名）   
-提交到远程
+```
 
-## 上传到github/远程仓库上
+在.git的config文件中可以查看到
 
-### GitBush终端上传
+![image-20220301142106174](image/image-20220301142106174.png)
 
-$ git push origin(地址别名) master（分支名	）  
+### 4.上传到github/远程仓库上
 
-### TortoiseGit上传到GitHub
+#### GitBush终端上传
+
+git push <远端代号> <本地分支名称>
+
+例子
+
+```
+git push origin(地址别名) master（分支名	） 
+```
+
+#### TortoiseGit上传到GitHub
 
 先配置上传文件
 
@@ -231,15 +499,146 @@ Git同步
 
 ![image-20211109112241456](image/image-20211109112241456-16436841571161.png)
 
-## 克隆远程仓库到目录页面
+### 5.Github上克隆一个项目
 
-GitBash拉远程仓库
+git clone  <远端地址>  <新项目目录名>。
 
-git clone git@github.com:lytforgood/MLCompetition.git（仓库名    MicroSoftSon/haozi.git  /  github名字+仓库名）   
+ <远端地址> 是指远程链接的地址。
+
+<项目目录名> 是指为克隆的项目在本地新建的目录名称，**可以不填**，**默认是GitHub的项目名**。
+
+**命令执行完后，会自动为这个远端地址建一个名为origin的代号。**
+
+```
+git clone git@github.com:lytforgood/MLCompetition.git（仓库名    MicroSoftSon/haozi.git  /  github名字+仓库名） 
+```
+
+
 
 tortoisegit拉去远程仓库
 
-![image-20211109200041204](image/image-20211109200041204-16436841630222.png)	
+![image-20211109200041204](image/image-20211109200041204-16436841630222.png)
+
+### 解决重复输入密码的问题
+
+上传的时候GitHub给了我们两个地址，一个是http协议的地址，一个是SSH模式下
+
+
+
+SSH比http协议有一个非常重要的好处，就是通过ssh上传不需要输入密码。
+
+但是有个前提就是你需要是这个项目的拥有者或合作者，且配置好了SSH key
+
+
+
+#### 配置SSH Key
+
+①步骤1：检查电脑家目录下是否已经生成了SSH key，如果有**.ssh**目录删除即可
+
+②步骤2：创建**SSH Key : ssh-keygen -t rsa -C lisiatguigu**
+
+成功的话(执行命令不需要输入任何内容)，会在~/下生成**.ssh**文件夹，查看生成两个文件
+
+**id_rsa**
+
+**id_rsa.pub**
+
+打开id_rsa.pub，复制里面的内容，到github上
+
+③步骤3：登录[lisiatguigu]账户
+
+打开用户设置
+
+点击[SSH and GPG keys] 填写Title和Key，点击[Add SSH key]
+
+   ![image-20220301143707378](image/image-20220301143707378.png)           
+
+④步骤4：重新建立新的连接SSH连接
+
+![image-20220301144212801](image/image-20220301144212801.png)
+
+命令：
+
+```
+git remote add originssh git@github.com:zhangsanatguigu/zhangsanatguigu_project.git
+
+git push originssh master
+```
+
+
+
+## 配置Git的忽略文件
+
+因为这些文件它与项目的运行无关，不参与服务器的部署。
+
+
+
+忽略文件最经典的就是idea的.class文件
+
+![image-20220301144531531](image/image-20220301144531531.png)
+
+
+
+
+
+
+
+忽略文件（git.ignore）
+
+这个文件的存放位置原则上在哪里都可以，为了便于让~/.gitconfig文件引用，建议也放在用户家目录下
+
+```
+# Compiled class file
+*.class
+ 
+
+# Log file
+*.log
+ 
+# BlueJ files
+*.ctxt
+ 
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+ 
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+ 
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+ 
+.classpath
+.project
+.settings
+target
+.idea
+*.iml
+
+```
+
+
+
+在.gitconfig文件中引用忽略规则文件
+
+```
+[user]
+	name = peter
+	email = peter@atguigu.com
+[core]
+	excludesfile = C:/Users/Lenovo/git.ignore
+```
+
+注意：这里要使用“正斜线（/）”，不要使用“反斜线（\）”
+
+
+
+
 
 ## 解决文件冲突
 
@@ -267,31 +666,9 @@ git pull 地址别名 分支名
 
 git push 地址别名 分支名
 
-# Git的分支管理
 
-## 创建分支
 
-1.命令创建
 
-通过“git branch 分支名 ”创建
-
-2.ToritoiseGit方式创建
-
-![image-20211109211132680](image/image-20211109211132680.png)
-
-3.查看创建的分支和主分支
-
-![image-20211109211224157](image/image-20211109211224157.png)
-
-## 删除分支
-
-git branch -d dev
-
-## 合并分支
-
-![image-20211109211850677](image/image-20211109211850677.png)
-
- 如果出现冲突就把冲突修改后再提交
 
 # Git标签
 
@@ -315,19 +692,51 @@ git tag -d 版本号
 
 ## idea中配置git
 
-流程就是箭头所指
+定位git程序
 
 ![image-20211110082551520](image/image-20211110082551520.png)
+
+![image-20220301144946374](image/image-20220301144946374.png)
+
+![image-20220301145038398](image/image-20220301145038398.png)
+
+## 初始化本地库
+
+![image-20220301145031899](image/image-20220301145031899.png)
 
 ## idea中使用git
 
 添加到暂存区和提交到本地仓库合并
+
+
 
 ![image-20211110084054029](image/image-20211110084054029.png)
 
 有修改的文件后add到暂存区
 
 ![image-20211110084232171](image/image-20211110084232171.png)
+
+![image-20220301145133762](image/image-20220301145133762.png)
+
+![image-20220301145140513](image/image-20220301145140513.png)
+
+## 创建分支
+
+![image-20220301145221716](image/image-20220301145221716.png)
+
+![image-20220301145226698](image/image-20220301145226698.png)
+
+![image-20220301145230920](image/image-20220301145230920.png)
+
+## 切换分支
+
+![image-20220301145243038](image/image-20220301145243038.png)
+
+## 合并分支
+
+![image-20220301145259028](image/image-20220301145259028.png)
+
+
 
 # git服务器搭建
 
