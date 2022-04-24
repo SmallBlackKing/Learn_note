@@ -871,3 +871,52 @@ fatal: refusing to merge unrelated histories
 
 `git merge master --allow-unrelated-histories`
 
+
+
+## 删除当前分支下的所有历史版本
+
+
+
+>先新建一个名为latest_branch的分支，然后将当前master分支中的所有文件添加到latest_branch分支
+>
+>中，接着等待移动完毕后删除master分支，最后把latest_branch这个分支的分支名改为master。
+
+
+
+- 切换到latest_branch分支下
+
+  git checkout --orphan latest_branch
+
+- 添加所有文件
+
+  git add -A
+
+- 提交更新
+
+  git commit -am "清除所有历史版本以减少仓库大小，请重新从远程拷贝此仓库"
+
+- 删除分支
+
+  git branch -D master
+
+- 将当前分支重命名
+
+  git branch -m master
+
+- 最后，强制更新存储库
+
+  git push -f origin master
+
+
+
+**将如下代码保存在一个bat文件里，然后双击运行即可。**
+
+```xml
+git checkout --orphan latest_branch
+git add -A
+git commit -am "清除所有历史版本以减少仓库大小，请重新从远程拷贝此仓库"
+git branch -D master
+git branch -m master
+git push -f origin master
+```
+
