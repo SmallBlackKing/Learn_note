@@ -52,6 +52,86 @@ Nginx不仅可以做反向代理，实现负载均衡。还能用作**正向代�
 
 # 第二章Nginx安装
 
+## 下载地址
+
+下载地址：http://nginx.org/   nginx-1.12.2.tar.gz
+
+![img](image/wps1.jpg)
+
+![img](image/wps2.jpg)
+
+## Nginx需要的依赖安装包
+
+pcre-8.37.tar.gz 
+
+openssl-1.0.1t.tar.gz
+
+zlib-1.2.8.tar.gz
+
+nginx-1.12.2.tar.gz
+
+
+
+### 在线安装nginx
+
+第一步 联网下载pcre
+
+wget http://downloads.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.gz
+
+第二步 解压压缩文件
+
+使用命令 tar -zxvf pcre-8.37.tar.gz
+
+第三步进入pcre-8.37 ./configure完成后，回到pcre目录下执行make，最后执行make install
+
+第四步 pcre-config --version  检查版本
+
+
+
+### 第二步，安装openssl，zlib，gcc依赖
+
+>yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
+
+
+
+### 第三步 Nginx
+
+使用命令解压 
+
+./configure
+
+make && make install
+
+进入目录 /usr/local/nginx/sbin  执行./nginx 启动服务
+
+### 第四步，关闭防火墙，访问nginx
+
+在windows系统中访问linux中nginx，默认不能访问的，因为防火墙问题
+
+关闭防火墙-开放访问的端口号，**80**端口
+
+查看开放的端口号
+
+firewall-cmd --list-all
+
+设置开放的服务或端口号
+
+firewall-cmd --add-service=http --permanent
+
+firewall-cmd --add-port=80/tcp --permanent
+
+![img](image/wps3.png)
+
+
+
+### 测试
+
+启动nginx后
+
+![img](image/wps4.jpg)
+
+
+
 # 第三章Nginx常用的命令和配置文件
 
 ## 3.1nginx常用的命令
@@ -221,6 +301,14 @@ host文件地址：C:\Windows\System32\drivers\etc
 
 ### 反向代理实例一演示
 
+>server全局块：
+>
+>**`listen: 申请代理的ip端口                     server_name: 申请代理的ip地址`**
+>
+>location：
+>
+>**`proxy_pass  ：转发的ip地址（申请代理的ip地址）`**
+
 **在Nginx进行请求转发的配置**
 
 那么如何只需要输入 [www.123.com](http://www.123.com) 便可以跳转到 Tomcat初始界面呢？
@@ -301,7 +389,11 @@ webapps/edu/a.html
 
 ## 负载均衡实例演示
 
-**upstream称为上游服务器，即真实处理请求的业务服务器。**
+>**`upstream称为上游服务器，即真实处理请求的业务服务器。`**
+>
+>
+
+
 
 server 192.168.19.128:8080   :     不同服务器的地址
 
