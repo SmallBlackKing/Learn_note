@@ -46,6 +46,8 @@ java创建对象有哪些方法：
 
 # 二.基于XML的di（依赖注入）
 
+DI是ioc的技术实现
+
 ## 举个例子
 
 ### 由spring创建对象
@@ -165,7 +167,7 @@ Spring调用的只是set方法，和其他无关
 
 ### 使用多配置文件的好处
 
-![image-20210831164731193](images/image-20210831164731193.png)
+![  ](images/image-20210831164731193.png)
 
 ### 包含关系的配置文件
 
@@ -277,7 +279,7 @@ byName自动会去框架中找相同名字的对象
 
 aop（Aspect Orient Programming）
 
-spring的动态代理编程方法
+spring的**动态代理编程方法**
 
 ## 动态代理
 
@@ -297,7 +299,7 @@ Aop : 面向切面编程，基于动态代理，可以使用jdk，cglib两种代
 
 ## Aop基本介绍
 
->AOP 底层，就是采用动态代理模式实现的。采用了两种代理：JDK 的动态代理，与 CGLIB 的动态代理。
+>AOP 底层，就是采用动态代理模式实现的。采用了两种代理：JDK 的动态代理，与cglib 的动态代理。
 >
 >
 >
@@ -325,7 +327,7 @@ Aop : 面向切面编程，基于动态代理，可以使用jdk，cglib两种代
 >
 >**实例**
 >
->例如，转账，在真正转账业务逻辑前后，需要权限控制、日志记录、加载事务、结束事务等交叉业务逻辑，而这些业务逻辑与主业务逻辑间并无直接关系。但，它们的代码量所占比重能达到总代码量的一半甚至还多。它们的存在，不仅产生了大量的“冗余”代码，还大大干扰了主业务逻辑---转账。
+>**例如，转账，在真正转账业务逻辑前后，需要权限控制、日志记录、加载事务、结束事务等交叉业务逻辑，而这些业务逻辑与主业务逻辑间并无直接关系。**但，它们的代码量所占比重能达到总代码量的一半甚至还多。它们的存在，不仅产生了大量的“冗余”代码，还大大干扰了主业务逻辑---转账。
 
 
 
@@ -1282,6 +1284,16 @@ ApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xm
 
 
 
+>WebApplicationContext 是 ApplicationContext 的扩展。它具有 Web 应用
+>
+>程序所需的一些额外功能。它与普通的 ApplicationContext 在解析主题和决定
+>
+>与哪个 servlet 关联的能力方面有所不同。
+
+
+
+
+
 需求：
 
 web项目中容器对象只需要创建一次，applicationContext容器不需要创建多次，那么只需要创建全局作用域ServletContext中
@@ -1622,3 +1634,24 @@ public class BeanConfig {
 未指定bean 的名称，默认采用的是 "方法名" + "首字母小写"的配置方式
 
 ​	
+
+## InitialzingBean用法
+
+>在spring初始化bean的时候，如果该bean是实现了InitializingBean接口，
+>
+>并且同时配置文件中指定了init-method，系统则是先调用afterPropertiesSet方法，
+>
+>然后在调用init-method中指定的方法。
+
+
+
+## MultipartFile
+
+### 介绍
+
+>​	在Java中实现文件上传、下载操作一直是一种令人烦躁的工作。但是随着Spring框架的发展，使用Spring框架中的MultipartFile来处理文件就是一件比较简单的事情。
+>
+>  MultipartFile类是org.springframework.web.multipart包下面的一个类，如果想使用MultipartFile类来进行文件操作，那么一定要引入Spring框架。MultipartFile主要是用表单的形式进行文件上传，在接收到文件时，可以获取文件的相关属性，比如文件名、文件大小、文件类型等等。
+
+
+

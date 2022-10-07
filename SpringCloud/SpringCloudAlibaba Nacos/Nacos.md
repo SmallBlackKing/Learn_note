@@ -1,5 +1,3 @@
-Nacos
-
 # Nacos简介
 
 ## Nacos是什么？
@@ -195,7 +193,7 @@ management:
 
 ### 主启动类
 
-**@EnableDiscoveryClient  与EnableEurekaClient的区别**
+**`@EnableDiscoveryClient  与EnableEurekaClient的区别`**
 
 >@EnableDiscoveryClient和@EnableEurekaClient共同点就是：**都是能够让注册中心能够发现，扫描到改服务。**
 >

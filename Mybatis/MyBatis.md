@@ -670,7 +670,7 @@ mapper文件：
 
 ![image-20210907181222217](images/image-20210907181222217.png)
 
-##### resultMap的使用
+### resultMap的使用
 
 resultMap使用格式：
 
@@ -700,7 +700,7 @@ resultMap使用格式：
 
 ![image-20210907200611816](images/image-20210907200611816.png)
 
-##### Like查询的两种方式
+### Like查询的两种方式
 
 第一种 like，java代码指定like的内容
 
@@ -1026,5 +1026,4 @@ PageHelper（分页处理的一个插件）
   </trim>
 </insert>
 ```
-
 

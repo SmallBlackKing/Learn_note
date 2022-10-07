@@ -154,7 +154,7 @@ Hystrix能够保证在一个依赖出问题的情况下，**不会导致整体�
 >
 >**@EnableHystrix**      	//激活@HystrixCommand  降级配置注解
 >
->注意在消费者这端需要在yml激活feign下的Hystrix
+>注意在**消费者这端需要在yml激活feign下的Hystrix**
 
 
 

@@ -161,6 +161,10 @@ public class OrderFeignMain80 {
 
 ### 业务类
 
+>***`Feign远程调用时，@PathVariable 注解中的value属性不能省略`***
+>
+>**如果没有指定,参数无法自动绑定**
+
 业务逻辑接口
 
 需要注意一些细节，直接看内部代码

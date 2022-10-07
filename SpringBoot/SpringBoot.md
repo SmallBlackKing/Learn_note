@@ -156,7 +156,103 @@ public class SpringConfig {
 
 
 
+### @ComponentScan
 
+
+
+**和Spring的component-scan标签差不多**
+
+![image-20220729104958158](../项目常用方法/image/image-20220729104958158.png)
+
+
+
+>如果你理解了ComponentScan，你就理解了Spring是一个依赖注入(dependency injection)框架。
+>
+>所有的内容都是关于bean的定义及其依赖关系。
+>
+> 定义Spring Beans的第一步是使用正确的注解@Component或@Service或@Repository或者@Controller
+> 但是，Spring不知道你定义了某个bean除非它知道从哪里可以找到这个bean
+>
+> **ComponentScan做的事情就是告诉Spring从哪里找到bean**
+>
+> 由你来定义哪些包需要被扫描。一旦你指定了，Spring将会在**被指定的包及其下级包**中寻找bean
+> 
+
+
+
+**总结：**
+
+- 如果你的其他包都在使用了@SpringBootApplication注解的main
+   app所在的包及其下级包中，则你什么都不用做，SpringBoot会自动帮你把其他包都扫描了
+- 如果你有一些bean所在的包，
+- 不在main app的包及其下级包中，那么你需要手动加上@ComponentScan注解并指定那个bean所在的包
+
+举个例子，看下面定义的类
+
+```java
+package com.demo.springboot;
+
+@SpringBootApplication
+public class SpringbootApplication {
+
+    public static void main(String[] args) {
+        ApplicationContext applicationContext = 
+                SpringApplication.run(SpringbootApplication .class, args);
+
+        for (String name : applicationContext.getBeanDefinitionNames()) {
+            System.out.println(name);
+        }
+    }
+}
+```
+
+
+
+类 SpringbootApplication 在com.demo.springboot包下，
+
+这个类使用了@SpringBootApplication注解，该注解定义了Spring将自动扫描包com.demo.springboot及其子包下的bean
+
+ **如果你项目中所有的类都定义在com.demo.springboot包及其子包下，那你不需要做任何事**
+ 但假如你一个类定义在包com.demo.somethingelse下，则你需要将这个新包也纳入扫描的范围,有两个方案可以达到这个目的。
+
+
+
+**方案1**
+ 定义@CoponentScan(“com.demo”)
+ 这么做扫描的范围扩大到整个父包com.demo
+
+```java
+@ComponentScan(“com.demo”)
+@SpringBootApplication
+public class SpringbootApplication {
+```
+
+**
+
+**方案2**
+ 定义分别扫描两个包
+ @ComponentScan({“com.demo.springboot”,”com.demo.somethingelse”})
+
+```java
+@ComponentScan({"com.demo.springboot","com.demo.somethingelse"})
+@SpringBootApplication
+public class SpringbootApplication {
+
+```
+
+
+
+**使用情况：**
+
+componentscan扫描其他模块
+
+其他模块的包要有**部分同名**
+
+![image-20220729104833226](../项目常用方法/image/image-20220729104833226.png)
+
+![image-20220729104854253](../项目常用方法/image/image-20220729104854253.png)
+
+像这个情况就可以在SpringApplication加ComponentScan
 
 
 
@@ -410,7 +506,7 @@ spring.profiles.active=product
 
 >（单个属性配置）
 >
->**用于逐个读取application.properties中的配置**
+>**用于逐个动态读取application.properties中的配置**
 
 
 
@@ -2638,6 +2734,28 @@ com.bjpowernode.springboot.web.controllerone#say()
 ```
 
 
+
+
+
+
+
+
+
+### 不能交给spring管理的类如何添加注解
+
+第一步，加入有参/无参构造
+
+
+
+![image-20220806231850596](images/image-20220806231850596.png)
+
+
+
+
+
+第二步，在下方的方法中加入（这个已经在容器内部的service）
+
+![image-20220806232249146](images/image-20220806232249146.png)
 
 ## 配置文件乱码问题
 

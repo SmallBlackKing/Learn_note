@@ -227,12 +227,13 @@ http {
             root   html;
             proxy_pass http://127.0.0.1:8080;
             index  index.html index.htm;
-		}
+		  }
 
         error_page   500 502 503 504  /50x.html;
         location = /50x.html {
             root   html;
         }
+     }
 ```
 
 这算是 Nginx 服务器配置中最频繁的部分，代理、缓存和日志定义等绝大多数功能和第三方模块的配置都在这里。

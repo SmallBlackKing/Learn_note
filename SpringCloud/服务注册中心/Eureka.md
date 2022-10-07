@@ -4,13 +4,15 @@
 
 ## 1.1 服务治理　　
 
-  	**定义：**在传统的rpc远程调用框架中，管理每个服务与服务之间依赖关系比较复杂，**管理比较复杂，所以需要使用服务治理**，**管理服务与服务之间依赖关系**，可以实现**服务调用、负载均衡、容错**等，实现服务发现与注册。
+>**定义：**
+>
+>在传统的**rpc远程调用框架**中，管理每个服务与服务之间依赖关系比较复杂，**管理比较复杂，所以需要使用服务治理**，**管理服务与服务之间依赖关系**，可以实现**服务调用、负载均衡、容错**等，**实现服务发现与注册**。
 
-​	**实现服务发现与注册**
 
 
+**实现服务发现与注册**
 
-​      Spring Cloud 封装了 Netflix 公司开发的 Eureka 模块来实现**服务治理**
+ Spring Cloud 封装了 Netflix 公司开发的 Eureka 模块来实现**服务治理**
 
 
 
@@ -22,7 +24,9 @@
 
 **服务发现**
 
-从注册中心获取服务信息。   实质：存key服务命令   取value服务调用地址
+从注册中心获取服务信息。   
+
+实质：***存key服务命令   取value服务调用地址***
 
 
 
@@ -42,25 +46,33 @@ Eureka采用了**CS的设计架构**，**Eureka Server** **作为服务注册功
 
 ### EurekaServer
 
-Eureka Server**提供服务注册服务**
+>Eureka Server**提供服务注册服务**
+>
+>各个微服务节点通过配置启动后，会在EurekaServer中进行**注册**，
+>
+>这样EurekaServer中的**服务注册表中将会存储所有可用服务节点的信息**，服务节点的信息可以在界面中直观看到。
 
-各个微服务节点通过配置启动后，会在EurekaServer中进行**注册**，
 
-这样EurekaServer中的**服务注册表中将会存储所有可用服务节点的信息**，服务节点的信息可以在界面中直观看到。
 
 ### EurekaClient
 
-EurekaClient **通过注册中心进行访问**
+>EurekaClient **通过注册中心进行访问**
+>
+>是一个Java客户端，用于简化Eureka Server的交互
 
-是一个Java客户端，用于简化Eureka Server的交互，
 
 
 
-**注意：**客户端同时也具备一个内置的、使用轮询(round-robin)负载算法的负载均衡器。
 
-在应用启动后，将会向Eureka Server发送心跳(默认周期为30秒)。如果Eureka Server在多个心跳周期内没有接收到某个节点的心跳，
 
-EurekaServer将会从服务注册表中把这个服务节点移除（默认90秒）
+
+**注意：**
+
+>客户端同时也具备一个内置的、使用轮询(round-robin)负载算法的负载均衡器。
+>
+>在应用启动后，将会向Eureka Server发送心跳(默认周期为30秒)。如果Eureka Server在多个心跳周期内没有接收到某个节点的心跳，
+>
+>EurekaServer将会从服务注册表中把这个服务节点移除（默认90秒）
 
 
 
@@ -202,7 +214,7 @@ http://localhost:7001/
 
 ## 2.3生成eurekaClient端服务提供者（开公司的）
 
-### 操作步骤
+### 操作步骤 
 
 #### 建Moudule   
 
@@ -981,9 +993,9 @@ public class OrderController {
 
 这个时候Eureka不应该将他删除
 
-所以Eureka就提供了一个自我保护的机制。会给出一定的时间，再这个时间范围内不将该服务从注册中心删除，如果再规定时间内又接到
+所以Eureka就提供了一个自我保护的机制。会给出一定的时间，再这个时间范围内不将该服务从注册中心删除，
 
-了心跳心号则继续正常工作
+如果再规定时间内又接到了心跳心号则继续正常工作
 
 如果没有就将其删除。
 
@@ -1009,13 +1021,21 @@ EurekaClient端
 
 Eureka客户端向服务端发送心跳的时间间隔，单位为秒(默认是30秒)：
 
-eureka.instance.lease-renewal-interval-in-seconds=30		
+>eureka.instance.lease-renewal-interval-in-seconds=30	
+
+
+
+​	
 
 
 
 Eureka服务端在收到最后一次心跳后等待时间上限，单位为秒(默认是90秒)，超时将剔除服务：
 
-eureka.instance.lease-expiration-duration-in-seconds=90
+>eureka.instance.lease-expiration-duration-in-seconds=90
+
+
+
+
 
 
 

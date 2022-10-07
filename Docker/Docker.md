@@ -2,7 +2,7 @@
 
 # Docker简介
 
-## Docker是什么？
+## Docker是什么？ 
 
 Docker的出现使得Docker得以打破过去「程序即应用」的观念。透过镜像(images)将作业系统核心除外，运作应用程式所需要的系统环境，由下而上打包，达到应用程式跨平台间的无缝接轨运作。
 
@@ -11,6 +11,14 @@ Docker是在Linux容器技术的基础上发展而来，将应用打成镜像，
 这就实现了跨平台、跨服务器。只需要一次配置好环境，换到别的机子上就可以一键部署好，大大简化了操作。
 
 
+
+![image-20220920155603684](image/image-20220920155603684.png)
+
+
+
+
+
+![image-20220920155628265](image/image-20220920155628265.png)
 
 ## 容器与虚拟机比较有什么区别？
 
@@ -35,7 +43,7 @@ Docker容器是在操作系统层面上实现虚拟化，直接复用本地主�
 
 docker官网：http://www.docker.com
 
-Docker Hub官网: https://hub.docker.com
+Docker Hub官网（docker镜像仓库）: https://hub.docker.com
 
 
 
